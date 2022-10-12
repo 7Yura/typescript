@@ -37,6 +37,18 @@
 // }
 //
 // ---------------------------------------------------------------------------
+interface ICore{
+    flight: number
+    core: {
+        reuse_count: number
+        status:string
+    }
+}
+interface IPayload{
+    payload_type: string
+    payload_mass_kg: number,
+    payload_mass_lbs: number
+}
 interface ISpaceInterface{
     mission_name: string,
     launch_date_local: string
@@ -44,30 +56,16 @@ interface ISpaceInterface{
         site_name_long: string
     },
     links: {
-        article_link: null,
+        article_link: string,
         video_link: string
     },
     rocket: {
         rocket_name: string
         first_stage: {
-            cores: [
-                {
-                    flight: number
-                    core: {
-                        reuse_count: number
-                        status:string
-                    }
-                }
-            ]
+            cores: ICore[]
         },
         second_stage: {
-            payloads: [
-                {
-                    payload_type: string
-                    payload_mass_kg: number,
-                    payload_mass_lbs: number
-                }
-            ]
+            payloads:IPayload []
         }
     }
 }
@@ -78,7 +76,8 @@ interface ISpaceInterface{
 //     age:18,
 //     gender:'male'
 // }
-const user: { name: string, age: number, gender: string; } = {name: 'Max', age: 18, gender: 'male'};
+interface IUser{ name: string, age: number, gender: string; }
+const user: IUser = {name: 'Max', age: 18, gender: 'male'};
 console.log(user.name);
 
 // function sum(a,b){
@@ -101,12 +100,8 @@ showSum(2,3)
 //     return someUser
 // }
 
-// interface ISomeUser {
-//     age:number
-//
-// }
-// function incAge(someUser:string, inc:number):string|number{
-//     someUser.age+=inc
-//     return someUser
-// }
-// incAge(user, 2)
+function incAge(someUser:IUser, inc:number):IUser{
+    someUser.age+=inc
+    return someUser
+}
+incAge(user, 2)
